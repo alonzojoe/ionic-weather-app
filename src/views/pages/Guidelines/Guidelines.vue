@@ -29,7 +29,4 @@ import {
   IonPage,
 } from "@ionic/vue";
 
-export default {
-  components: { IonHeader, IonToolbar, IonTitle, IonContent, IonPage },
-};
 </script>

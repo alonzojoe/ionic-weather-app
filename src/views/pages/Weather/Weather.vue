@@ -1,5 +1,5 @@
 <template>
-  <!-- <ion-page id="main-content">
+  <ion-page id="main-content">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Card Title</ion-card-title>
@@ -10,16 +10,6 @@
         <pre>{{ weatherData }}</pre>
       </ion-card-content>
     </ion-card>
-  </ion-page> -->
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Listen now</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <div class="example-content">Listen now content</div>
-    </ion-content>
   </ion-page>
 </template>
 
