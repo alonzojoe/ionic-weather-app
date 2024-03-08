@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>E-Weather</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -14,6 +14,18 @@
       </ion-header>
 
       <div id="container">
+
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Card Title</ion-card-title>
+            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+           <pre>{{ weatherData }}</pre>
+          </ion-card-content>
+        </ion-card>
+
         <strong>Ready to create an app?</strong>
         <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
       </div>
@@ -21,8 +33,21 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import {onMounted, ref} from 'vue'
+import api from "@/api"
+
+const weatherData = ref([])
+const fetchData = async () => {
+    const response = await api.get('/weather?lat=13.940776257881716&lon=121.16507619074791&appid=2de3397f7de9039ea1c0523d3c605269')
+    weatherData.value = response.data
+}
+
+onMounted(async () => {
+  await fetchData()
+})
+
 </script>
 
 <style scoped>
