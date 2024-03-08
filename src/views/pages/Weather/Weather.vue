@@ -52,14 +52,11 @@ import {
 } from "@ionic/vue";
 import { onMounted, ref } from "vue";
 import api from "@/api";
-import axios from "axios";
 
 const weather = ref(null);
 const fetchData = async () => {
-  const response = await axios.get(
-    `https://api.weatherstack.com/current?access_key=${
-      import.meta.env.VITE_API_KEY_SECONDARY
-    }&query=Lipa`
+  const response = await api.get(
+    "/weather?lat=13.940776257881716&lon=121.16507619074791&appid=2de3397f7de9039ea1c0523d3c605269"
   );
   weather.value = response.data;
 };
