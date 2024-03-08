@@ -1,24 +1,24 @@
 <template>
   <ion-page>
     <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
+      <ion-router-outlet />
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" href="/home">
+        <ion-tab-button tab="home" href="/home/weather">
           <ion-icon :icon="cloudy" />
           <ion-label>Weather</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="radio" href="/radio">
+        <ion-tab-button tab="radio" href="/home/emergency">
           <ion-icon :icon="call" />
           <ion-label>Emergency</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="library" href="/library">
+        <ion-tab-button tab="library" href="/home/guidelines">
           <ion-icon :icon="warning" />
           <ion-label>Guidelines</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="search" href="/search">
+        <ion-tab-button tab="search" href="/home/profile">
           <ion-icon :icon="person" />
           <ion-label>Profile</ion-label>
         </ion-tab-button>
@@ -53,20 +53,11 @@ import {
   call,
   warning,
 } from "ionicons/icons";
-import { onMounted, ref } from "vue";
-import api from "@/api";
 
-const weatherData = ref([]);
-const fetchData = async () => {
-  const response = await api.get(
-    "/weather?lat=13.940776257881716&lon=121.16507619074791&appid=2de3397f7de9039ea1c0523d3c605269"
-  );
-  weatherData.value = response.data;
-};
+import { useRoute, useRouter } from "vue-router";
 
-onMounted(async () => {
-  await fetchData();
-});
+const route = useRoute();
+const router = useRouter();
 </script>
 
 <style scoped>
