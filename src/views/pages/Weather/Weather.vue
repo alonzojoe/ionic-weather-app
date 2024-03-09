@@ -4,7 +4,7 @@
       <div class="grid mb-0">
         <div class="col-8">
           <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
-            App Name Here <ion-icon :icon="cloudyNight" />
+            App Name Here {{ time }} <ion-icon :icon="cloudyNight" />
           </div>
         </div>
         <div class="col-4">
@@ -106,6 +106,16 @@ import { navigate, logIn, cloudyNight } from "ionicons/icons"
 import { onMounted, ref, computed } from "vue";
 import api from "@/api";
 import axios from 'axios';
+import moment from 'moment'
+
+const time = ref(null)
+const getTime = async () => {
+  const response = await axios.get('http://worldtimeapi.org/api/timezone/Asia/Manila')
+  time.value = {
+    ...response.data,
+    datetime: moment(response.data.datetime).format("MMMM D, YYYY")
+  }
+}
 
 const weather = ref(null);
 const isLoading = ref(false);
@@ -131,6 +141,7 @@ const loadAPI = async () => {
 
 
 onMounted(async () => {
+  getTime()
   await loadAPI()
 });
 </script>
