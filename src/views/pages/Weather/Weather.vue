@@ -1,10 +1,25 @@
 <template>
   <ion-page>
     <ion-content>
+      <div class="grid mb-0" style="border: 1px solid red;">
+        <div class="col-5">
+          <div class="text-start text-xl px-3 pt-3 border-round-sm bg-primary font-semibold" style="color: #2A2C3F;">
+            <ion-icon :icon="navigate" />Lipa City, Batangas
+            Philippines
+          </div>
+        </div>
+        <div class="col-7">
+          <!-- <div class="text-end p-3 border-round-sm bg-primary font-bold ">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d123911.53933867977!2d121.01227609966392!3d13.9445724775512!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd13576170055f%3A0xe6da25b39082662a!2sLipa%2C%20Batangas!5e0!3m2!1sfil!2sph!4v1709954443373!5m2!1sfil!2sph"
+              width="100" height="60" style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div> -->
+        </div>
+      </div>
       <ion-card class="weather-card" v-if="weatherDatav2">
         <ion-card-header>
-          <ion-card-subtitle class="text-white" style="font-size: 17px">Lipa City, Batangas
-            Philippines </ion-card-subtitle>
+          <!-- <ion-card-subtitle class="text-white" style="font-size: 17px"></ion-card-subtitle>
           <ion-row style="margin-top: 15px">
             <ion-col class="ion-text-start">
               <ion-card-title class="text-white" v-if="weatherDatav2" style="font-size: 40px">{{
@@ -15,11 +30,43 @@
               <ion-img class="weather-icon" v-if="weatherDatav2"
                 :src="`/weather_icons/set01/big/${weatherDatav2.current.icon_num}.png`" alt="weather-icon"></ion-img>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-card-header>
-
+        <!-- <pre style="color: #fff;"> {{ weatherDatav2 }}</pre> -->
         <ion-card-content>
-          <pre>{{ weatherDatav2 }}</pre>
+          <div class="grid">
+            <div class="col-6 relative" v-if="weather">
+              <!-- <ion-img class="weather-icon" v-if="weatherDatav2"
+                :src="`/weather_icons/set01/big/${weatherDatav2.current.icon_num}.png`" alt="weather-icon"></ion-img> -->
+            </div>
+            <div class="col-6" v-if="weatherDatav2" style="border: 1px solid red;">
+              <div class="flex flex-column justify-content-end">
+                <ion-label class="text-5xl text-white font-bold" style="color: #FBE1E2;">{{
+              weatherDatav2.current.temperature
+            }}°C</ion-label>
+                <!-- <ion-label class="text-xl text-white font-bold" style="color: #FBE1E2;">{{
+                  weatherDatav2.current.summary
+                  }}</ion-label> -->
+                <div>
+                </div>
+                <ion-label class="text-l text-white font-bold" style="color: #FBE1E2;">
+                  Wind
+                </ion-label>
+                <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
+                  Speed: {{ weatherDatav2.current.wind.speed }}
+                </ion-label>
+                <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
+                  Angle: {{ weatherDatav2.current.wind.angle }}
+                </ion-label>
+                <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
+                  Direction: {{ weatherDatav2.current.wind.dir }}°
+                </ion-label>
+
+              </div>
+
+            </div>
+
+          </div>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -46,6 +93,7 @@ import {
   IonRow,
   IonImg,
 } from "@ionic/vue";
+import { navigate } from "ionicons/icons"
 import { onMounted, ref, computed } from "vue";
 import api from "@/api";
 import axios from 'axios';
@@ -64,28 +112,6 @@ const fetchWeatherv2 = async () => {
   weatherDatav2.value = response.data
 }
 
-const calculateBackgroundColor = computed(() => {
-  const iconNumber = weatherDatav2.value.current.icon_num;
-
-  // Define color ranges based on icon numbers
-  if (iconNumber >= 1 && iconNumber <= 8) {
-    return 'radial-gradient(ellipse at 67% 82%, #fa4d5e, rgba(250, 47, 179, 1))'; // Sunny
-  } else if (iconNumber >= 9 && iconNumber <= 12) {
-    return 'radial-gradient(ellipse at 67% 82%, #a5c7ff, #75a6e9)'; // Light Rain
-  } else if (iconNumber >= 13 && iconNumber <= 15) {
-    return 'radial-gradient(ellipse at 67% 82%, #2d3e7e, #141e45)'; // Thunderstorm
-  } else if (iconNumber >= 16 && iconNumber <= 21) {
-    return 'radial-gradient(ellipse at 67% 82%, #2b387c, #0c0f1f)'; // Heavy Rain
-  } else if (iconNumber >= 22 && iconNumber <= 25) {
-    return 'radial-gradient(ellipse at 67% 82%, #99a7d2, #6683ae)'; // Light Rain with Sun
-  } else if (iconNumber >= 26 && iconNumber <= 31) {
-    return 'radial-gradient(ellipse at 67% 82%, #ffdf61, #ffd000)'; // Sunny
-  } else if (iconNumber >= 32 && iconNumber <= 36) {
-    return 'radial-gradient(ellipse at 67% 82%, #ffdb7b, #ffa500)'; // Little Sunny
-  } else {
-    return 'radial-gradient(ellipse at 67% 82%, #808080, #555555)'; // Default color
-  }
-});
 
 onMounted(async () => {
   await fetchData();
@@ -95,6 +121,7 @@ onMounted(async () => {
 
 <style scoped>
 .weather-card {
+  background: radial-gradient(ellipse at 67% 82%, #5988F9, rgba(117, 156, 241, 1));
   border-radius: 15px !important;
   padding: 10px;
 }
@@ -106,6 +133,8 @@ onMounted(async () => {
 /* For small screens */
 .weather-icon {
   width: 100%;
+  position: absolute;
+  top: -50px;
 }
 
 /* For medium screens and above */
