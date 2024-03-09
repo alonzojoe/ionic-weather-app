@@ -2,18 +2,18 @@
   <ion-page>
     <ion-content>
       <div class="grid mb-0">
-        <div class="col-6">
+        <div class="col-8">
           <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
-            AppName <ion-icon :icon="cloudyNight" />
+            App Name Here <ion-icon :icon="cloudyNight" />
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <div class="text-right px-3 pt-3 border-round-sm bg-primary font-bold">
             <button class="btn-sign">Sign In</button>
           </div>
         </div>
       </div>
-      <ion-card class="weather-card" v-if="weatherDatav2">
+      <ion-card class="weather-card" v-if="weatherDatav2 && !isLoading">
         <ion-card-header class="p-0 m-0">
           <div class="flex">
             <div class="col-12">
@@ -41,7 +41,7 @@
             <div class="col-6" v-if="weatherDatav2">
               <div class=" flex flex-column justify-content-end">
                 <ion-label class="text-6xl text-white font-bold" style="color: #FBE1E2;">{{
-              weatherDatav2.current.temperature
+              Math.floor(weatherDatav2.current.temperature)
             }}°C</ion-label>
                 <div>
                 </div>
@@ -70,6 +70,10 @@
           </div>
         </ion-card-content>
       </ion-card>
+      <ion-card style="box-shadow: none; border: 4px;" v-if="isLoading">
+        <ion-skeleton-text :animated="true" style="height: 280px;"></ion-skeleton-text>
+      </ion-card>
+
     </ion-content>
   </ion-page>
 </template>
@@ -93,6 +97,10 @@ import {
   IonGrid,
   IonRow,
   IonImg,
+  IonList,
+  IonListHeader,
+  IonSkeletonText,
+  IonThumbnail,
 } from "@ionic/vue";
 import { navigate, logIn, cloudyNight } from "ionicons/icons"
 import { onMounted, ref, computed } from "vue";
@@ -100,6 +108,7 @@ import api from "@/api";
 import axios from 'axios';
 
 const weather = ref(null);
+const isLoading = ref(false);
 const fetchData = async () => {
   const response = await api.get(
     "/weather?lat=13.940776257881716&lon=121.16507619074791&appid=2de3397f7de9039ea1c0523d3c605269"
@@ -113,10 +122,16 @@ const fetchWeatherv2 = async () => {
   weatherDatav2.value = response.data
 }
 
-
-onMounted(async () => {
+const loadAPI = async () => {
+  isLoading.value = true
   await fetchData();
   await fetchWeatherv2();
+  isLoading.value = false
+}
+
+
+onMounted(async () => {
+  await loadAPI()
 });
 </script>
 
