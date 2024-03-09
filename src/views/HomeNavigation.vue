@@ -19,8 +19,8 @@
         </ion-tab-button>
 
         <ion-tab-button tab="search" href="/profile">
-          <ion-icon :icon="person" />
-          <ion-label>Profile</ion-label>
+          <ion-icon :icon="cog" />
+          <ion-label>Settings</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -47,5 +47,6 @@ import {
   person,
   call,
   warning,
+  cog
 } from "ionicons/icons";
 </script>

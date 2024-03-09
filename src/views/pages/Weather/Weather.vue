@@ -3,8 +3,9 @@
     <ion-content>
       <div class="grid mb-0" style="border: 1px solid red;">
         <div class="col-5">
-          <div class="text-start text-xl px-3 pt-3 border-round-sm bg-primary font-semibold" style="color: #2A2C3F;">
-            <ion-icon :icon="navigate" />Lipa City, Batangas
+          <div class="text-start text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
+            <!-- <ion-icon :icon="navigate" /> -->
+            Lipa City, Batangas
             Philippines
           </div>
         </div>
@@ -18,35 +19,25 @@
         </div>
       </div>
       <ion-card class="weather-card" v-if="weatherDatav2">
-        <ion-card-header>
-          <!-- <ion-card-subtitle class="text-white" style="font-size: 17px"></ion-card-subtitle>
-          <ion-row style="margin-top: 15px">
-            <ion-col class="ion-text-start">
-              <ion-card-title class="text-white" v-if="weatherDatav2" style="font-size: 40px">{{
-        weatherDatav2.current.temperature
-      }}°C</ion-card-title>
-            </ion-col>
-            <ion-col class="ion-text-center" v-if="weather">
-              <ion-img class="weather-icon" v-if="weatherDatav2"
-                :src="`/weather_icons/set01/big/${weatherDatav2.current.icon_num}.png`" alt="weather-icon"></ion-img>
-            </ion-col>
-          </ion-row> -->
-        </ion-card-header>
-        <!-- <pre style="color: #fff;"> {{ weatherDatav2 }}</pre> -->
         <ion-card-content>
           <div class="grid">
             <div class="col-6 relative" v-if="weather">
-              <!-- <ion-img class="weather-icon" v-if="weatherDatav2"
-                :src="`/weather_icons/set01/big/${weatherDatav2.current.icon_num}.png`" alt="weather-icon"></ion-img> -->
+              <div class=" pt-0">
+                <ion-img class="weather-icon" v-if="weatherDatav2"
+                  :src="`/weather_icons/set01/big/${weatherDatav2.current.icon_num}.png`" alt="weather-icon"></ion-img>
+                <ion-label class="text-3xl text-white font-bold" style="color: #FBE1E2;">
+                  {{ weatherDatav2.current.summary }}
+                </ion-label>
+                <ion-label class="text-2xl text-white" style="color: #FBE1E2;">
+                  Today
+                </ion-label>
+              </div>
             </div>
-            <div class="col-6" v-if="weatherDatav2" style="border: 1px solid red;">
-              <div class="flex flex-column justify-content-end">
-                <ion-label class="text-5xl text-white font-bold" style="color: #FBE1E2;">{{
-              weatherDatav2.current.temperature
-            }}°C</ion-label>
-                <!-- <ion-label class="text-xl text-white font-bold" style="color: #FBE1E2;">{{
-                  weatherDatav2.current.summary
-                  }}</ion-label> -->
+            <div class="col-6" v-if="weatherDatav2">
+              <div class=" flex flex-column justify-content-end">
+                <ion-label class="text-6xl text-white font-bold" style="color: #FBE1E2;">{{
+        weatherDatav2.current.temperature
+      }}°C</ion-label>
                 <div>
                 </div>
                 <ion-label class="text-l text-white font-bold" style="color: #FBE1E2;">
@@ -61,7 +52,12 @@
                 <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
                   Direction: {{ weatherDatav2.current.wind.dir }}°
                 </ion-label>
-
+                <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
+                  Cloud Cover: {{ weatherDatav2.current.cloud_cover }}
+                </ion-label>
+                <ion-label class="text-xs text-white font-bold" style="color: #FBE1E2;">
+                  Precipitation: {{ weatherDatav2.current.precipitation.total }}
+                </ion-label>
               </div>
 
             </div>
@@ -132,9 +128,7 @@ onMounted(async () => {
 
 /* For small screens */
 .weather-icon {
-  width: 100%;
-  position: absolute;
-  top: -50px;
+  width: 80%;
 }
 
 /* For medium screens and above */
