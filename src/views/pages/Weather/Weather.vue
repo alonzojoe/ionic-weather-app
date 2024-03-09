@@ -4,7 +4,7 @@
       <div class="grid mb-0">
         <div class="col-8">
           <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
-            App Name Here {{ time }} <ion-icon :icon="cloudyNight" />
+            App Name Here <ion-icon :icon="cloudyNight" />
           </div>
         </div>
         <div class="col-4">
@@ -20,6 +20,7 @@
               <div class="text-left p-0">
                 <ion-card-title class="text-white">Lipa City <span style="font-size: 15px;">Batangas
                     Philippines</span></ion-card-title>
+                <ion-card-subtitle class="text-white mt-1" v-if="time">{{ currdate.date }}</ion-card-subtitle>
               </div>
             </div>
           </div>
@@ -33,9 +34,9 @@
                 <ion-label class="text-2xl text-white font-bold" style="color: #FBE1E2;">
                   {{ weatherDatav2.current.summary }}
                 </ion-label>
-                <ion-label class="text-xl text-white" style="color: #FBE1E2;">
+                <!-- <ion-label class="text-xl text-white" style="color: #FBE1E2;">
                   Today
-                </ion-label>
+                </ion-label> -->
               </div>
             </div>
             <div class="col-6" v-if="weatherDatav2">
@@ -73,7 +74,80 @@
       <ion-card style="box-shadow: none; border: 4px;" v-if="isLoading">
         <ion-skeleton-text :animated="true" style="height: 280px;"></ion-skeleton-text>
       </ion-card>
-
+      <div class="mt-2">
+        <div class="grid">
+          <div class="col-8">
+            <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
+              Hourly
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-right px-3 pt-3 border-round-sm bg-primary font-bold">
+              <!-- <button class="btn-sign"><ion-icon :icon="chevronDown" /></button> -->
+              <ion-icon :icon="chevronDown" />
+            </div>
+          </div>
+          <div class=col-12 v-if="weatherDatav2 && !isLoading">
+            <ion-card class="weather-card" v-for="(h, index) in weatherDatav2.hourly" :key="index">
+              <div class="grid">
+                <div class="col">
+                  <div class="text-center border-round-sm bg-primary font-bold">
+                    <div class="flex p-0 m-0 flex-column align-items-center">
+                      <div class="grid p-0 m-0">
+                        <div class="col-6">
+                          <div class="text-left text-white border-round-sm bg-primary font-bold">
+                            {{ Math.floor(h.temperature) }}°C
+                          </div>
+                        </div>
+                        <div class="col-6 p-0 m-0">
+                          <div class="text-right border-round-sm bg-primary font-bold">
+                            <ion-img class="weather-icon-hourly" :src="`/weather_icons/set01/big/${h.icon}.png`"
+                              alt="weather-icon"></ion-img>
+                          </div>
+                        </div>
+                        <div class="col-12 p-0 m-0">
+                          <ion-label class="text-xs text-white" style="color: #FBE1E2;">
+                            {{ h.summary }}
+                          </ion-label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="text-center border-round-sm bg-primary font-bold"> </div>
+                </div>
+                <div class="col">
+                  <div class="text-center border-round-sm bg-primary font-bold">
+                    <div class="flex p-0 m-0 flex-column align-items-center">
+                      <div class="grid p-0 m-0">
+                        <div class="col-12">
+                          <div class="text-right text-xs text-white border-round-sm bg-primary font-bold">
+                            {{ h.date }}
+                          </div>
+                        </div>
+                        <div class="col-2 p-0 m-0">
+                          <div class="text-right border-round-sm bg-primary font-bold">
+                            <!-- <ion-img class="weather-icon-hourly" :src="`/weather_icons/set01/big/${h.icon}.png`"
+                              alt="weather-icon"></ion-img> -->
+                          </div>
+                        </div>
+                        <div class="col-12 p-0 m-0">
+                          <div class="text-right mr-2 text-xs text-white border-round-sm bg-primary font-bold">
+                            <ion-label class="text-xs text-white" style="color: #FBE1E2;">
+                              {{ h.time }}
+                            </ion-label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ion-card>
+          </div>
+        </div>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -102,18 +176,18 @@ import {
   IonSkeletonText,
   IonThumbnail,
 } from "@ionic/vue";
-import { navigate, logIn, cloudyNight } from "ionicons/icons"
+import { navigate, logIn, cloudyNight, time, chevronDown } from "ionicons/icons"
 import { onMounted, ref, computed } from "vue";
 import api from "@/api";
 import axios from 'axios';
 import moment from 'moment'
 
-const time = ref(null)
+const currdate = ref(null)
 const getTime = async () => {
   const response = await axios.get('http://worldtimeapi.org/api/timezone/Asia/Manila')
-  time.value = {
+  currdate.value = {
     ...response.data,
-    datetime: moment(response.data.datetime).format("MMMM D, YYYY")
+    date: moment(response.data.datetime).format("MMMM D, YYYY")
   }
 }
 
@@ -129,7 +203,17 @@ const fetchData = async () => {
 const weatherDatav2 = ref(null)
 const fetchWeatherv2 = async () => {
   const response = await axios.get('https://www.meteosource.com/api/v1/free/point?lat=13.9411N&lon=120.4623E&sections=current%2Chourly&timezone=Asia%2FManila&language=en&units=auto&key=8vwl8c5n7nyjkk4vsdsngykg33wx699w8mqstkgs');
-  weatherDatav2.value = response.data
+  weatherDatav2.value = {
+    ...response.data,
+    hourly: response.data.hourly.data.map((h) => {
+      return {
+        ...h,
+        date: moment(h.date).format("MMM D, YYYY"),
+        time: moment(h.date).format("h:mm A"),
+      }
+    })
+  }
+  console.log(weatherDatav2.value)
 }
 
 const loadAPI = async () => {
@@ -190,7 +274,30 @@ onMounted(async () => {
 /* For large screens and above */
 @media (min-width: 768px) {
   .weather-icon {
+    max-width: 40%;
+    /* Adjust as needed */
+  }
+}
+
+
+
+/* For small screens */
+.weather-icon-hourly {
+  width: 80%;
+}
+
+/* For medium screens and above */
+@media (min-width: 576px) {
+  .weather-icon-hourly {
     max-width: 30%;
+    /* Adjust as needed */
+  }
+}
+
+/* For large screens and above */
+@media (min-width: 768px) {
+  .weather-icon-hourly {
+    max-width: 50%;
     /* Adjust as needed */
   }
 }
