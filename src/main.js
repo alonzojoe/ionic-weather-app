@@ -20,6 +20,7 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
+import 'primeflex/primeflex.css';
 /* Theme variables */
 import './theme/variables.css';
 
