@@ -87,6 +87,11 @@
               <ion-icon :icon="chevronDown" />
             </div>
           </div>
+          <div class="col-12" v-if="isLoading">
+            <ion-card v-for="(i, index) in 6" :key="index" style="box-shadow: none; border: 4px;">
+              <ion-skeleton-text :animated="true" style="height: 70px;"></ion-skeleton-text>
+            </ion-card>
+          </div>
           <div class=col-12 v-if="weatherDatav2 && !isLoading">
             <ion-card class="weather-card" v-for="(h, index) in weatherDatav2.hourly" :key="index">
               <div class="grid">
@@ -146,6 +151,7 @@
               </div>
             </ion-card>
           </div>
+
         </div>
       </div>
     </ion-content>
