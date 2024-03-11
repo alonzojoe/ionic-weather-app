@@ -3,7 +3,7 @@
     <ion-content>
       <div class="grid mb-0">
         <div class="col-8">
-          <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
+          <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold">
             App Name Here <ion-icon :icon="cloudyNight" />
           </div>
         </div>
@@ -77,7 +77,7 @@
       <div class="mt-2">
         <div class="grid">
           <div class="col-8">
-            <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold" style="color: #4F4F4F;">
+            <div class="text-end text-xl px-3 pt-3 border-round-sm font-semibold">
               Hourly
             </div>
           </div>
