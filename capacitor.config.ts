@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
   appName: 'weather-app',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    allowNavigation: ['']
   }
 };
 
