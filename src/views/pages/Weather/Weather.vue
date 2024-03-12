@@ -1,16 +1,4 @@
 <template>
-  <ion-menu content-id="main-content">
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Sign In</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding">
-      <ion-menu-toggle>
-        <ion-button>Click to close the menu</ion-button>
-      </ion-menu-toggle>
-    </ion-content>
-  </ion-menu>
   <ion-page id="main-content">
     <ion-content class="ion-padding">
       <ion-refresher slot="fixed" @ionRefresh="refresher($event)">
@@ -24,10 +12,11 @@
         </div>
         <div class="col-4">
           <div
-            class="text-right px-3 pt-3 border-round-sm bg-primary font-bold"
+            class="text-right px-3 pt-2 border-round-sm bg-primary font-bold"
           >
             <ion-menu-toggle>
-              <button class="btn-sign">Sign In</button>
+              <!-- <button class="btn-sign"><ion-icon :icon="logIn" /></button> -->
+              <ion-button><ion-icon :icon="logIn" /></ion-button>
             </ion-menu-toggle>
           </div>
         </div>

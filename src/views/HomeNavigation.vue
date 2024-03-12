@@ -1,4 +1,38 @@
 <template>
+  <ion-menu content-id="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Sign In</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- <ion-menu-toggle>
+        <ion-button>Click to close the menu</ion-button>
+      </ion-menu-toggle> -->
+      <div class="sign-content">
+        <ion-label><h2>Sign In</h2></ion-label>
+        <ion-input
+          label="Phone"
+          label-placement="floating"
+          fill="outline"
+          type="number"
+          placeholder="Enter text"
+          class="my-3"
+        ></ion-input>
+        <ion-input
+          label="Password"
+          label-placement="floating"
+          fill="outline"
+          type="password"
+          placeholder="Enter text"
+          class="mb-3"
+        ></ion-input>
+        <ion-button color="primary">
+          <ion-icon slot="start" :icon="logIn"></ion-icon> Sign In</ion-button
+        >
+      </div>
+    </ion-content>
+  </ion-menu>
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
@@ -29,6 +63,7 @@
 
 <script setup>
 import {
+  IonButtons,
   IonPage,
   IonTabs,
   IonRouterOutlet,
@@ -36,6 +71,12 @@ import {
   IonTabButton,
   IonLabel,
   IonIcon,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonContent,
+  IonMenuToggle,
+  IonInput,
 } from "@ionic/vue";
 
 import {
@@ -47,6 +88,21 @@ import {
   person,
   call,
   warning,
-  cog
+  cog,
+  logIn,
 } from "ionicons/icons";
 </script>
+
+<style scoped>
+.sign-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  /* justify-content: center !important; */
+  height: 100% !important;
+}
+
+.btn {
+  background: #5988f9 !important;
+}
+</style>
